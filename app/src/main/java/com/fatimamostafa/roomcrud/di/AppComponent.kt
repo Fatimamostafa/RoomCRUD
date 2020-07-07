@@ -1,11 +1,11 @@
-package com.fatimamostafa.mvvm_template.di
+package com.fatimamostafa.roomcrud.di
 
 import android.content.Context
-import com.fatimamostafa.mvvm_template.App
-import com.fatimamostafa.mvvm_template.di.modules.ActivityInjectorsModule
-import com.fatimamostafa.mvvm_template.di.modules.AppModule
-import com.fatimamostafa.mvvm_template.di.modules.FragmentInjectorsModule
-import com.fatimamostafa.mvvm_template.di.modules.NetworkModule
+import com.fatimamostafa.roomcrud.App
+import com.fatimamostafa.roomcrud.di.modules.ActivityInjectorsModule
+import com.fatimamostafa.roomcrud.di.modules.AppModule
+import com.fatimamostafa.roomcrud.di.modules.FragmentInjectorsModule
+import com.fatimamostafa.roomcrud.di.modules.NetworkModule
 import dagger.BindsInstance
 
 import dagger.Component

@@ -1,7 +1,7 @@
-package com.fatimamostafa.mvvm_template
+package com.fatimamostafa.roomcrud
 
 import androidx.multidex.MultiDexApplication
-import com.fatimamostafa.mvvm_template.di.DaggerAppComponent
+import com.fatimamostafa.roomcrud.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

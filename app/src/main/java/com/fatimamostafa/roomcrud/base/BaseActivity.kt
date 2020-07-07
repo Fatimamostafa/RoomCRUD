@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template.base
+package com.fatimamostafa.roomcrud.base
 
 import android.content.Context
 import android.content.Intent

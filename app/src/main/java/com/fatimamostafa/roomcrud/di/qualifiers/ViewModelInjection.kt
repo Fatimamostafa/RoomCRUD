@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template.di.qualifiers
+package com.fatimamostafa.roomcrud.di.qualifiers
 
 import javax.inject.Qualifier
 

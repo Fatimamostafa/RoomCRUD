@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template.di.modules
+package com.fatimamostafa.roomcrud.di.modules
 
 import dagger.Component
 import javax.inject.Singleton

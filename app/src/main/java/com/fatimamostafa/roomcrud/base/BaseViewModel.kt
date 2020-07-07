@@ -1,9 +1,9 @@
-package com.fatimamostafa.mvvm_template.base
+package com.fatimamostafa.roomcrud.base
 
 import androidx.lifecycle.ViewModel
-import com.fatimamostafa.mvvm_template.di.modules.DaggerViewModelInjectorModule
-import com.fatimamostafa.mvvm_template.di.modules.NetworkModule
-import com.fatimamostafa.mvvm_template.di.modules.ViewModelInjectorModule
+import com.fatimamostafa.roomcrud.di.modules.DaggerViewModelInjectorModule
+import com.fatimamostafa.roomcrud.di.modules.NetworkModule
+import com.fatimamostafa.roomcrud.di.modules.ViewModelInjectorModule
 
 
 abstract class BaseViewModel() : ViewModel() {

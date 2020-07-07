@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template.base
+package com.fatimamostafa.roomcrud.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

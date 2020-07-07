@@ -1,6 +1,6 @@
-package com.fatimamostafa.mvvm_template.di.modules
+package com.fatimamostafa.roomcrud.di.modules
 
-import com.fatimamostafa.mvvm_template.network.RetrofitApiInterface
+import com.fatimamostafa.roomcrud.network.RetrofitApiInterface
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

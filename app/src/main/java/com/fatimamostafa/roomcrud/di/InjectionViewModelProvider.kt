@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template.di
+package com.fatimamostafa.roomcrud.di
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template
+package com.fatimamostafa.roomcrud
 
 import org.junit.Test
 

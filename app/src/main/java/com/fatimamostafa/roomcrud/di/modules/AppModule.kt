@@ -1,8 +1,8 @@
-package com.fatimamostafa.mvvm_template.di.modules
+package com.fatimamostafa.roomcrud.di.modules
 
 import android.app.Application
 import android.content.Context
-import com.fatimamostafa.mvvm_template.App
+import com.fatimamostafa.roomcrud.App
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

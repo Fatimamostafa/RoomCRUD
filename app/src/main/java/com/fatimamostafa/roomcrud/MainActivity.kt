@@ -1,4 +1,4 @@
-package com.fatimamostafa.mvvm_template
+package com.fatimamostafa.roomcrud
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
