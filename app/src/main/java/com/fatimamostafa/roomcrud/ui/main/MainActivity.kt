@@ -125,17 +125,12 @@ class MainActivity : BaseActivity() {
             selectedFile?.let {
                 Log.d("File: ", FileUtils.getPath(this, it))
 
-                try {
-                    val inputStream: InputStream? = contentResolver.openInputStream(it)
-                    val r = BufferedReader(InputStreamReader(inputStream))
-                    val jsonString = r.readText()
-                    viewModel.get().employeeJson(jsonString)
-                } catch (e: Exception) {
+                val inputStream: InputStream? = contentResolver.openInputStream(it)
+                val r = BufferedReader(InputStreamReader(inputStream))
+                val jsonString = r.readText()
+                Log.d("File JSON: ", jsonString)
 
-                }
-
-
-                viewModel.get().importJSON(FileUtils.getPath(this, it))
+                viewModel.get().importJSON(jsonString)
             }
         }
     }

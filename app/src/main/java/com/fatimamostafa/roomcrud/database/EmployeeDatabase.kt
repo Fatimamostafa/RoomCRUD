@@ -1,6 +1,7 @@
 package com.fatimamostafa.roomcrud.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -8,23 +9,25 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 @Database(version = 1, entities = [Employee::class], exportSchema = false)
-abstract class EmployeeDatabase() : RoomDatabase() {
+abstract class EmployeeDatabase : RoomDatabase() {
 
     abstract fun employeeDao(): EmployeeDao
 
     private class EmployeeDatabaseCallback(
-        private val employeeJson: String
+        private val employeeJson: String,
+        private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
+
         override fun onCreate(db: SupportSQLiteDatabase) {
+            Log.d("EmployeeDallback: ", "EMP")
             super.onCreate(db)
             INSTANCE?.let { database ->
-                CoroutineScope(Dispatchers.IO).launch {
+                scope.launch {
                     val employeeDao = database.employeeDao()
                     prePopulateDatabase(employeeDao)
                 }
@@ -32,12 +35,14 @@ abstract class EmployeeDatabase() : RoomDatabase() {
         }
 
         private suspend fun prePopulateDatabase(employeeDao: EmployeeDao) {
+            Log.d("prePopulateDatabase: ", "EMP")
             val typeToken = object : TypeToken<List<Employee>>() {}.type
             val employees = Gson().fromJson<List<Employee>>(employeeJson, typeToken)
-            if (employees != null)
-                employeeDao.insertAllEmployees(employees)
+            employeeDao.insertAllEmployees(employees)
+
         }
     }
+
 
     companion object {
 
@@ -46,7 +51,8 @@ abstract class EmployeeDatabase() : RoomDatabase() {
 
         fun getDatabase(
             context: Context,
-            employeeJson: String
+            employeeJson: String,
+            coroutineScope: CoroutineScope
         ): EmployeeDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -54,16 +60,19 @@ abstract class EmployeeDatabase() : RoomDatabase() {
             }
 
             synchronized(this) {
+                Log.d("synchronized: ", "EMP")
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     EmployeeDatabase::class.java,
                     "employees_database"
                 )
-                    .addCallback(EmployeeDatabaseCallback(employeeJson))
+                    .addCallback(EmployeeDatabaseCallback(employeeJson, coroutineScope))
                     .build()
                 INSTANCE = instance
                 return instance
             }
         }
     }
+
+
 }

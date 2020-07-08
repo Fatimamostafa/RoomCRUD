@@ -5,6 +5,7 @@ import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.fatimamostafa.roomcrud.base.BaseViewModel
 import com.fatimamostafa.roomcrud.database.EmployeeDatabase
 import com.fatimamostafa.roomcrud.database.EmployeeModel
@@ -22,11 +23,12 @@ class MainVM @Inject constructor(
     val employeeListLiveData: MutableLiveData<MutableList<EmployeeModel>> = MutableLiveData()
     private var employeeJSON: String = ""
 
-    private val repository: EmployeeRepository
+    private var repository: EmployeeRepository
 
     init {
+        Log.d("DATABASE: ", "init")
         val employeeDao = EmployeeDatabase
-            .getDatabase(application, employeeJSON)
+            .getDatabase(application, employeeJSON, viewModelScope)
             .employeeDao()
         repository = EmployeeRepository(employeeDao)
     }
@@ -41,8 +43,8 @@ class MainVM @Inject constructor(
         var source: FileChannel? = null
         var destination: FileChannel? = null
         val currentDBPath =
-            "/data/com.fatimamostafa.roomcrud/shared_prefs/player.json"
-        val backupDBPath: String = "employeeJSON"
+            "/data/com.fatimamostafa.roomcrud/databases/employees_database"
+        val backupDBPath: String = "employees_database"
         val currentDB = File(data, currentDBPath)
         val backupDB = File(path, backupDBPath)
         try {
@@ -60,32 +62,38 @@ class MainVM @Inject constructor(
         }
     }
 
-    fun importJSON(uri: String) {
-        try {
-            Log.d("MV", uri)
-            val data = Environment.getDataDirectory()
+    fun importJSON(employeeJSON: String) {
+        val employeeDao = EmployeeDatabase
+            .getDatabase(application, employeeJSON, viewModelScope)
+            .employeeDao()
+        repository = EmployeeRepository(employeeDao)
 
-            val currentDBPath =
-                "/data/com.fatimamostafa.roomcrud/shared_prefs/player.json"
-            val backupDBPath = ""
-            val backupDB = File(data, currentDBPath)
-            val currentDB = File(uri.replace(backupDBPath, ""), backupDBPath)
+        /* try {
+             Log.d("MV", uri)
+             val data = Environment.getDataDirectory()
 
-            val src =
-                FileInputStream(currentDB).channel
-            val dst =
-                FileOutputStream(backupDB).channel
-            dst.transferFrom(src, 0, src.size())
-            src.close()
-            dst.close()
-            Log.d("VM", "imported")
-            fileResponseLiveData.postValue("DB imported")
-            getAllEmployees()
+             val currentDBPath =
+                 "/data/com.fatimamostafa.roomcrud/databases/employees_database"
+             val backupDBPath = ""
+             val backupDB = File(data, currentDBPath)
+             val currentDB = File(uri.replace(backupDBPath, ""), backupDBPath)
 
-        } catch (e: Exception) {
-            Log.d("VM", "imported Failed" + e.localizedMessage)
-            fileResponseLiveData.postValue("DB imported Failed")
-        }
+             val src =
+                 FileInputStream(currentDB).channel
+             val dst =
+                 FileOutputStream(backupDB).channel
+             dst.transferFrom(src, 0, src.size())
+             src.close()
+             dst.close()
+             Log.d("VM", "imported")
+             fileResponseLiveData.postValue("DB imported")
+             getAllEmployees()
+
+         } catch (e: Exception) {
+             Log.d("VM", "imported Failed" + e.localizedMessage)
+             fileResponseLiveData.postValue("DB imported Failed")
+         }*/
+
     }
 
     fun employeeJson(jsonString: String) {

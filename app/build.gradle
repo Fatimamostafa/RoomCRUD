@@ -58,7 +58,8 @@ dependencies {
 
     // ViewModel & LiveData
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
-
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     //Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
@@ -93,4 +94,5 @@ dependencies {
 
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.karumi:dexter:5.0.0'
+
 }
