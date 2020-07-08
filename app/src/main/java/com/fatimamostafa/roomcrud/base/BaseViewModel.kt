@@ -9,7 +9,6 @@ abstract class BaseViewModel() : ViewModel() {
    // val compositeDisposable = CompositeDisposable()
    private val injector: ViewModelInjectorModule = DaggerViewModelInjectorModule
        .builder()
-       .networkModule(NetworkModule)
        //.utilsModule(UtilsModule)
        .build()
 

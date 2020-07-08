@@ -1,6 +1,5 @@
 package com.fatimamostafa.roomcrud.database
 
-import Employee
 import androidx.lifecycle.LiveData
 import androidx.room.*
 

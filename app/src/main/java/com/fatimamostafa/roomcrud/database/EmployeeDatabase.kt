@@ -1,6 +1,5 @@
 package com.fatimamostafa.roomcrud.database
 
-import Employee
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -35,7 +34,8 @@ abstract class EmployeeDatabase() : RoomDatabase() {
         private suspend fun prePopulateDatabase(employeeDao: EmployeeDao) {
             val typeToken = object : TypeToken<List<Employee>>() {}.type
             val employees = Gson().fromJson<List<Employee>>(employeeJson, typeToken)
-            employeeDao.insertAllEmployees(employees)
+            if (employees != null)
+                employeeDao.insertAllEmployees(employees)
         }
     }
 
