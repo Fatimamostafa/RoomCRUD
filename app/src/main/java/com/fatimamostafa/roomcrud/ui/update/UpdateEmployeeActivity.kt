@@ -187,7 +187,7 @@ class UpdateEmployeeActivity : BaseActivity() {
                         e.printStackTrace()
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    val error = result.error
+
                 }
             }
         }

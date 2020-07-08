@@ -3,7 +3,6 @@ package com.fatimamostafa.roomcrud.ui.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
@@ -32,6 +31,7 @@ import java.io.InputStreamReader
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
+    lateinit var employeeList: List<EmployeeModel>
 
     @Inject
     @ViewModelInjection
@@ -95,12 +95,14 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
         recyclerView.adapter = adapter
 
         viewModel.get().fileResponseLiveData.observe(this, Observer {
-            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
 
         viewModel.get().getAllEmployees().observe(this, Observer<List<EmployeeModel>> {
+            employeeList = it
             adapter.swapData(it)
         })
+
 
     }
 
@@ -109,8 +111,8 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
             .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    var path = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-                    viewModel.get().exportJSON(path)
+                    var path = "/storage/emulated/0/Download"
+                    viewModel.get().exportJSON(employeeList, path)
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
