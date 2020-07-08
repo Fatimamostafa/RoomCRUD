@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.fatimamostafa.roomcrud.base.BaseActivity
 import com.fatimamostafa.roomcrud.database.EmployeeModel
 import com.fatimamostafa.roomcrud.di.ViewModelInjectionField
 import com.fatimamostafa.roomcrud.di.qualifiers.ViewModelInjection
+import com.fatimamostafa.roomcrud.ui.update.UpdateEmployeeActivity
 import com.fatimamostafa.roomcrud.utils.FileUtils
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -28,7 +31,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
 
     @Inject
     @ViewModelInjection
@@ -37,8 +40,27 @@ class MainActivity : BaseActivity() {
 
     override fun layoutRes() = R.layout.activity_main
 
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_add -> {
+                navigateUpdate(null)
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun navigateUpdate(item: EmployeeModel?) {
+        UpdateEmployeeActivity.employee = item
+        val intent = Intent(this, UpdateEmployeeActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        toolbar.inflateMenu(R.menu.menu_details)
+        toolbar.setOnMenuItemClickListener(this)
 
         btn_export.setOnClickListener {
             exportEmployeeList()
@@ -57,11 +79,20 @@ class MainActivity : BaseActivity() {
                     .VERTICAL
             )
         )
-        adapter = EmployeeAdapter(mutableListOf())
+        adapter = EmployeeAdapter(
+            mutableListOf(),
+            application,
+            object : EmployeeAdapter.ItemClickListener {
+                override fun clickEdit(item: EmployeeModel) {
+                    navigateUpdate(item)
+                }
+
+                override fun clickDelete(item: EmployeeModel) {
+                    viewModel.get().delete(item)
+                }
+
+            })
         recyclerView.adapter = adapter
-        adapter.setOnPlayerTapListener { employee ->
-            Log.d("onTAP", employee.firstName)
-        }
 
 
         viewModel.get().getAllEmployees().observe(this, Observer<List<EmployeeModel>> {

@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:requestLegacyExternalStorage="true"
         android:name=".App"
@@ -30,6 +32,7 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name="com.fatimamostafa.roomcrud.ui.update.UpdateEmployeeActivity" />
     </application>
 
 </manifest>

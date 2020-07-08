@@ -24,7 +24,6 @@ abstract class EmployeeDatabase : RoomDatabase() {
 
 
         override fun onCreate(db: SupportSQLiteDatabase) {
-            Log.d("EmployeeDallback: ", "EMP")
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
@@ -34,11 +33,14 @@ abstract class EmployeeDatabase : RoomDatabase() {
             }
         }
 
+
         private suspend fun prePopulateDatabase(employeeDao: EmployeeDao) {
-            Log.d("prePopulateDatabase: ", "EMP")
-            val typeToken = object : TypeToken<List<Employee>>() {}.type
-            val employees = Gson().fromJson<List<Employee>>(employeeJson, typeToken)
-            employeeDao.insertAllEmployees(employees)
+            if (employeeJson != "") {
+                val typeToken = object : TypeToken<List<Employee>>() {}.type
+                val employees = Gson().fromJson<List<Employee>>(employeeJson, typeToken)
+                if (employees != null)
+                    employeeDao.insertAllEmployees(employees)
+            }
 
         }
     }

@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">Employee</string>
     <string name="employee_details">Details</string>
-    <string name="employee_age_gender">%d yrs old, (%s)</string>
     <string name="delete_employee">Delete Employee</string>
     <string name="export">Export</string>
     <string name="importEmployee">Import</string>
+    <string name="employee_age_gender">%d yrs old, (%s)</string>
+    <string name="submit">Submit</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="add_employee">Add Employee</string>
+    <string name="update_employee">Update Employee</string>
+    <string name="upload">Upload</string>
 </resources>

@@ -11,12 +11,20 @@ class EmployeeRepository (private  val employeeDao: EmployeeDao) {
         return employeeDao.getAllEmployees()
     }
 
-    suspend fun updateEmployee(player: Employee) {
-        employeeDao.updateEmployee(player)
+    suspend fun updateEmployee(employee: Employee) {
+        employeeDao.updateEmployee(employee)
     }
 
-    suspend fun deleteEmployee(player: Employee) {
-        employeeDao.deleteEmployee(player)
+    suspend fun addEmployee(employee: Employee) {
+        employeeDao.addEmployee(employee)
+    }
+
+    suspend fun insertAllEmployee(list: List<Employee>) {
+        employeeDao.insertAllEmployees(list)
+    }
+
+    suspend fun deleteEmployee(employee: Employee) {
+        employeeDao.deleteEmployee(employee)
     }
 
 }

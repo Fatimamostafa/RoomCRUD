@@ -7,8 +7,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatimamostafa.roomcrud.base.BaseViewModel
+import com.fatimamostafa.roomcrud.database.Employee
 import com.fatimamostafa.roomcrud.database.EmployeeDatabase
 import com.fatimamostafa.roomcrud.database.EmployeeModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -26,7 +30,6 @@ class MainVM @Inject constructor(
     private var repository: EmployeeRepository
 
     init {
-        Log.d("DATABASE: ", "init")
         val employeeDao = EmployeeDatabase
             .getDatabase(application, employeeJSON, viewModelScope)
             .employeeDao()
@@ -63,41 +66,31 @@ class MainVM @Inject constructor(
     }
 
     fun importJSON(employeeJSON: String) {
-        val employeeDao = EmployeeDatabase
-            .getDatabase(application, employeeJSON, viewModelScope)
-            .employeeDao()
-        repository = EmployeeRepository(employeeDao)
+        val typeToken = object : TypeToken<List<Employee>>() {}.type
+        val employees = Gson().fromJson<List<Employee>>(employeeJSON, typeToken)
+        if (employees != null)
+            viewModelScope.launch {
+                repository.insertAllEmployee(employees)
+                getAllEmployees()
+            }
 
-        /* try {
-             Log.d("MV", uri)
-             val data = Environment.getDataDirectory()
-
-             val currentDBPath =
-                 "/data/com.fatimamostafa.roomcrud/databases/employees_database"
-             val backupDBPath = ""
-             val backupDB = File(data, currentDBPath)
-             val currentDB = File(uri.replace(backupDBPath, ""), backupDBPath)
-
-             val src =
-                 FileInputStream(currentDB).channel
-             val dst =
-                 FileOutputStream(backupDB).channel
-             dst.transferFrom(src, 0, src.size())
-             src.close()
-             dst.close()
-             Log.d("VM", "imported")
-             fileResponseLiveData.postValue("DB imported")
-             getAllEmployees()
-
-         } catch (e: Exception) {
-             Log.d("VM", "imported Failed" + e.localizedMessage)
-             fileResponseLiveData.postValue("DB imported Failed")
-         }*/
 
     }
 
-    fun employeeJson(jsonString: String) {
-        employeeJSON = jsonString
+    fun delete(item: EmployeeModel) {
+        viewModelScope.launch {
+            repository.deleteEmployee(
+                Employee(
+                    item.id,
+                    item.firstName,
+                    item.lastName,
+                    item.age,
+                    item.gender,
+                    item.imageUrl
+                )
+            )
+        }
     }
+
 
 }

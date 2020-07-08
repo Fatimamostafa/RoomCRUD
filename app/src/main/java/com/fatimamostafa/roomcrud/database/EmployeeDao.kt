@@ -16,4 +16,7 @@ interface EmployeeDao {
 
   @Delete
   suspend fun deleteEmployee(employee: Employee)
+
+  @Insert
+  suspend fun addEmployee(employee: Employee)
 }
