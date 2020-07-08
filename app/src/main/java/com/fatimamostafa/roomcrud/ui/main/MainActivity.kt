@@ -94,6 +94,9 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
             })
         recyclerView.adapter = adapter
 
+        viewModel.get().fileResponseLiveData.observe(this, Observer {
+            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        })
 
         viewModel.get().getAllEmployees().observe(this, Observer<List<EmployeeModel>> {
             adapter.swapData(it)
