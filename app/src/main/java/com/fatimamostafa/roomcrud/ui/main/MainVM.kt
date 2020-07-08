@@ -1,6 +1,5 @@
 package com.fatimamostafa.roomcrud.ui.main
 
-import Employee
 import EmployeeDatabase
 import android.app.Application
 import android.os.Environment
@@ -17,13 +16,13 @@ import java.nio.channels.FileChannel
 import javax.inject.Inject
 
 class MainVM @Inject constructor(
-    private var repository: EmployeeRepository,
     private var application: Application
 ) : BaseViewModel() {
     val fileResponseLiveData: MutableLiveData<String> = MutableLiveData()
     val employeeListLiveData: MutableLiveData<MutableList<EmployeeModel>> = MutableLiveData()
     private var employeeJSON: String = ""
 
+    var repository: EmployeeRepository = EmployeeRepository.getInstance()
 
     fun getAllEmployees(): LiveData<List<EmployeeModel>> {
         return repository.getAllEmployees()
@@ -84,12 +83,10 @@ class MainVM @Inject constructor(
 
     fun employeeJson(jsonString: String) {
         employeeJSON = jsonString
-
         val employeeDao = EmployeeDatabase
             .getDatabase(application, employeeJSON)
             .employeeDao()
-        repository = EmployeeRepository(employeeDao)
+        repository = EmployeeRepository.getInstance(employeeDao)
     }
-
 
 }
