@@ -1,12 +1,11 @@
+package com.fatimamostafa.roomcrud.database
 
-
+import Employee
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.fatimamostafa.roomcrud.database.EmployeeModel
 
 @Dao
 interface EmployeeDao {
-
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   suspend fun insertAllEmployees(employees: List<Employee>)
 
@@ -14,8 +13,8 @@ interface EmployeeDao {
   fun getAllEmployees(): LiveData<List<EmployeeModel>>
 
   @Update
-  suspend fun updateEmployee(player: Employee)
+  suspend fun updateEmployee(employee: Employee)
 
   @Delete
-  suspend fun deleteEmployee(player: Employee)
+  suspend fun deleteEmployee(employee: Employee)
 }

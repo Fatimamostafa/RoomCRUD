@@ -26,14 +26,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.lang.Exception
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
     @Inject
     @ViewModelInjection
-    lateinit var viewModel:  ViewModelInjectionField<MainVM>
+    lateinit var viewModel: ViewModelInjectionField<MainVM>
     private lateinit var adapter: EmployeeAdapter
 
     override fun layoutRes() = R.layout.activity_main
@@ -53,23 +52,20 @@ class MainActivity : BaseActivity() {
         recyclerView.layoutManager =
             LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         recyclerView.addItemDecoration(
-            DividerItemDecoration(this@MainActivity, RecyclerView
-            .VERTICAL)
+            DividerItemDecoration(
+                this@MainActivity, RecyclerView
+                    .VERTICAL
+            )
         )
         adapter = EmployeeAdapter(mutableListOf())
         recyclerView.adapter = adapter
         adapter.setOnPlayerTapListener { employee ->
-           Log.d("onTAP", employee.firstName)
+            Log.d("onTAP", employee.firstName)
         }
 
-        viewModel.get().employeeListLiveData.observe(this, Observer {
-            it.let { list ->
-                if(list.size == 0){
-                    adapter.swapData(it)
-                }else{
-                    adapter.swapData(it)
-                }
-            }
+
+        viewModel.get().getAllEmployees().observe(this, Observer<List<EmployeeModel>> {
+            adapter.swapData(it)
         })
 
     }
@@ -127,20 +123,19 @@ class MainActivity : BaseActivity() {
             val selectedFile = data?.data
 
             selectedFile?.let {
-                Log.d("File: ", FileUtils.getPath(this,it))
+                Log.d("File: ", FileUtils.getPath(this, it))
 
                 try {
                     val inputStream: InputStream? = contentResolver.openInputStream(it)
                     val r = BufferedReader(InputStreamReader(inputStream))
                     val jsonString = r.readText()
                     viewModel.get().employeeJson(jsonString)
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
 
                 }
 
 
-                viewModel.get().importJSON(FileUtils.getPath(this,it))
+                viewModel.get().importJSON(FileUtils.getPath(this, it))
             }
         }
     }

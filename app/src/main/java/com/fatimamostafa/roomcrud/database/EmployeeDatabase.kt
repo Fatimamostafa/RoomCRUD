@@ -1,10 +1,11 @@
-import android.app.Application
+package com.fatimamostafa.roomcrud.database
+
+import Employee
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.fatimamostafa.roomcrud.App
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +18,7 @@ abstract class EmployeeDatabase() : RoomDatabase() {
 
     abstract fun employeeDao(): EmployeeDao
 
-    private class PlayerDatabaseCallback(
+    private class EmployeeDatabaseCallback(
         private val employeeJson: String
     ) : RoomDatabase.Callback() {
 
@@ -58,7 +59,7 @@ abstract class EmployeeDatabase() : RoomDatabase() {
                     EmployeeDatabase::class.java,
                     "employees_database"
                 )
-                    .addCallback(PlayerDatabaseCallback(employeeJson))
+                    .addCallback(EmployeeDatabaseCallback(employeeJson))
                     .build()
                 INSTANCE = instance
                 return instance
