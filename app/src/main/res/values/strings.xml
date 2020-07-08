@@ -3,4 +3,6 @@
     <string name="employee_details">Details</string>
     <string name="employee_age_gender">%d yrs old, (%s)</string>
     <string name="delete_employee">Delete Employee</string>
+    <string name="export">Export</string>
+    <string name="importEmployee">Import</string>
 </resources>

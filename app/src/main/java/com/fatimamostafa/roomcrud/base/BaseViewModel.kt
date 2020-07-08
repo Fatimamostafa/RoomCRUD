@@ -2,7 +2,6 @@ package com.fatimamostafa.roomcrud.base
 
 import androidx.lifecycle.ViewModel
 import com.fatimamostafa.roomcrud.di.modules.DaggerViewModelInjectorModule
-import com.fatimamostafa.roomcrud.di.modules.NetworkModule
 import com.fatimamostafa.roomcrud.di.modules.ViewModelInjectorModule
 
 

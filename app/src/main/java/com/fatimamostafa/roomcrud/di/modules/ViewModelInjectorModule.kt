@@ -1,5 +1,6 @@
 package com.fatimamostafa.roomcrud.di.modules
 
+import com.fatimamostafa.roomcrud.ui.main.MainVM
 import dagger.Component
 import javax.inject.Singleton
 
@@ -9,14 +10,13 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = [
-    NetworkModule::class
+
 ])
 interface ViewModelInjectorModule {
-
+    fun inject(mainVM: MainVM)
 
     @Component.Builder
     interface Builder {
         fun build(): ViewModelInjectorModule
-        fun networkModule(networkModule: NetworkModule): Builder
     }
 }

@@ -12,5 +12,4 @@ interface BaseCommunicator {
 
     fun clearAllAndStartActivity(cls: Class<*>)
 
-    fun showToast(text: String?)
 }

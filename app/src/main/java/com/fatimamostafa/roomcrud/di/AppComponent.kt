@@ -5,7 +5,6 @@ import com.fatimamostafa.roomcrud.App
 import com.fatimamostafa.roomcrud.di.modules.ActivityInjectorsModule
 import com.fatimamostafa.roomcrud.di.modules.AppModule
 import com.fatimamostafa.roomcrud.di.modules.FragmentInjectorsModule
-import com.fatimamostafa.roomcrud.di.modules.NetworkModule
 import dagger.BindsInstance
 
 import dagger.Component
@@ -18,9 +17,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityInjectorsModule::class,
         FragmentInjectorsModule::class,
-        NetworkModule::class,
         AppModule::class
-        //UtilsModule::class
     ]
 )
 interface AppComponent {

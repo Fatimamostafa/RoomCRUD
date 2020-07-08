@@ -1,7 +1,9 @@
 package com.fatimamostafa.roomcrud
 
+import EmployeeDatabase
 import androidx.multidex.MultiDexApplication
-import com.fatimamostafa.roomcrud.di.DaggerAppComponent
+import androidx.room.Database
+import com.fatimamostafa.roomcrud.ui.main.EmployeeRepository
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -20,7 +22,6 @@ class App : MultiDexApplication(), HasAndroidInjector {
             .application(this)
             .build()
             .inject(this)
-
     }
 
     override fun androidInjector(): AndroidInjector<Any> {
