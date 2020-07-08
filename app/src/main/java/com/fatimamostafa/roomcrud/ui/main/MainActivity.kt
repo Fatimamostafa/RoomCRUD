@@ -94,7 +94,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
             })
         recyclerView.adapter = adapter
 
-        viewModel.get().fileResponseLiveData.observe(this, Observer {
+        viewModel.get().response.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
 

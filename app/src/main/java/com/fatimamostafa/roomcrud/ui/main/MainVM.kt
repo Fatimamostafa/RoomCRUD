@@ -19,8 +19,7 @@ import javax.inject.Inject
 class MainVM @Inject constructor(
     private var application: Application
 ) : BaseViewModel() {
-    val fileResponseLiveData: MutableLiveData<String> = MutableLiveData()
-    val employeeListLiveData: MutableLiveData<MutableList<EmployeeModel>> = MutableLiveData()
+    val response: MutableLiveData<String> = MutableLiveData()
     private var employeeJSON: String = ""
 
     private var repository: EmployeeRepository
@@ -47,11 +46,11 @@ class MainVM @Inject constructor(
         Log.d("MAINVM", path!!)
         try {
             File(path, "employee.json").writeText(json.toString())
-            fileResponseLiveData.postValue("DB exported to Download Folder")
+            response.postValue("Json file exported to Download Folder")
 
         } catch (e: IOException) {
             e.printStackTrace()
-            fileResponseLiveData.postValue("DB exported failed")
+            response.postValue("Json file exported failed")
 
         }
 
